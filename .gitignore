@@ -1,0 +1,16 @@
+# Kotlin
+*.kotlin_module
+*.class
+*.jar
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+.vscode/
+.DS_Store
+Thumbs.db
+tmp/
+temp/
+.idea
