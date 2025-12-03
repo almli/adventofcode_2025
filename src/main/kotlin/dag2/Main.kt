@@ -4,31 +4,30 @@ import java.io.File
 
 fun main() {
     val list = File("data.txt").readText().trim().split(",").map { it.split('-') }.map { (a, b) -> a.toLong() to b.toLong() }
-    del1(list)
-    del2(list)
+    println("del1 sum: " + solve(list, 2))
+    println("del2 sum: " + solve(list, null))
 }
 
-private fun del2(list: List<Pair<Long, Long>>) {
+private fun solve(list: List<Pair<Long, Long>>, maksAntallDeler: Int?): Long {
     val invalidIds = mutableListOf<Long>()
     list.forEach {
-        var v = it.first
+        var current = it.first
         val end = it.second
-        while (v <= end) {
-            val str = v.toString()
+        while (current <= end) {
+            val str = current.toString()
             val length = str.length
-            for (antallDeler in 2..length) {
+            for (antallDeler in 2..(maksAntallDeler ?: length)) {
                 if (length % antallDeler == 0) {
                     if (allEqual(splitIntoParts(str, antallDeler))) {
-                        invalidIds.add(v)
+                        invalidIds.add(current)
                         break
                     }
                 }
             }
-            v++
+            current++
         }
     }
-    val sum = invalidIds.reduce { a, b -> a + b }
-    println("del2 sum: $sum")
+    return invalidIds.reduce { a, b -> a + b }
 }
 
 fun allEqual(strings: List<String>) =
@@ -36,23 +35,3 @@ fun allEqual(strings: List<String>) =
 
 fun splitIntoParts(s: String, parts: Int) =
     s.chunked(s.length / parts)
-
-private fun del1(list: List<Pair<Long, Long>>) {
-    val invalidIds = mutableListOf<Long>()
-    list.forEach {
-        var v = it.first
-        val end = it.second
-        while (v <= end) {
-            val str = v.toString()
-            val length = str.length
-            if (length % 2 == 0) {
-                if (allEqual(splitIntoParts(str, 2)))
-                    invalidIds.add(v)
-            }
-            v++
-        }
-    }
-    val sum = invalidIds.reduce { a, b -> a + b }
-    println("del1 sum: $sum")
-}
-
