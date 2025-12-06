@@ -3,7 +3,6 @@ package dag6
 import java.io.File
 
 fun main() {
-
     fun plus(x: Long, y: Long) = x + y
     fun mult(x: Long, y: Long) = x * y
     fun del1(): Long {
@@ -23,14 +22,11 @@ fun main() {
         val height = lines.count()
         val opLine = lines[lines.size - 1]
         val opIndex = opLine.indices.filter { opLine[it] == '+' || opLine[it] == '*' }
-
         fun charAtPos(x: Int, y: Int): Char? {
             if (x >= lines[y].length || lines[y][x] == ' ') return null
             return lines[y][x]
         }
-
         var total = 0L
-
         for (colIndex in opIndex.indices) {
             val cellStartIndex = opIndex[colIndex]
             val op = if (opLine[cellStartIndex] == '+') ::plus else ::mult
@@ -42,15 +38,12 @@ fun main() {
                     val c = charAtPos(internalCellIndex, y)
                     if (c != null) num += c
                 }
-                if (!num.isEmpty()) {
-                    columnValues += num.toLong()
-                }
+                if (num.isNotEmpty()) columnValues += num.toLong()
             }
             total += columnValues.reduce(op)
         }
         return total
     }
-
     println("del1: " + del1())
     println("del2: " + del2())
 }
