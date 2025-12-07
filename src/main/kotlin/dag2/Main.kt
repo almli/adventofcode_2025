@@ -8,7 +8,7 @@ fun main() {
     println("del2 sum: " + solve(list, null))
 }
 
-private fun solve(list: List<Pair<Long, Long>>, maksAntallDeler: Int?): Long {
+private fun solve(list: List<Pair<Long, Long>>, maxParts: Int?): Long {
     val invalidIds = mutableListOf<Long>()
     list.forEach {
         var current = it.first
@@ -16,9 +16,9 @@ private fun solve(list: List<Pair<Long, Long>>, maksAntallDeler: Int?): Long {
         while (current <= end) {
             val str = current.toString()
             val length = str.length
-            for (antallDeler in 2..(maksAntallDeler ?: length)) {
-                if (length % antallDeler == 0) {
-                    if (allEqual(splitIntoParts(str, antallDeler))) {
+            for (parts in 2..(maxParts ?: length)) {
+                if (length % parts == 0) {
+                    if (str.chunked(str.length / parts).distinct().size <= 1) {
                         invalidIds.add(current)
                         break
                     }
@@ -29,9 +29,3 @@ private fun solve(list: List<Pair<Long, Long>>, maksAntallDeler: Int?): Long {
     }
     return invalidIds.reduce { a, b -> a + b }
 }
-
-fun allEqual(strings: List<String>) =
-    strings.distinct().size <= 1
-
-fun splitIntoParts(s: String, parts: Int) =
-    s.chunked(s.length / parts)
