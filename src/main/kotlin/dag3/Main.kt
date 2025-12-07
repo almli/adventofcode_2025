@@ -9,9 +9,9 @@ fun main() {
 }
 
 fun solve(list: List<String>, antallCeller: Int): Long =
-    list.map { beste(it, antallCeller) }.reduce { acc, i -> acc + i }
+    list.map { best(it, antallCeller) }.reduce { acc, i -> acc + i }
 
-fun beste(bank: String, antallCeller: Int): Long {
+fun best(bank: String, antallCeller: Int): Long {
     val digits = mutableListOf<Char>()
     var lastPos = -1
     for (i in 1..antallCeller) {

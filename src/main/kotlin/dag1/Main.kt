@@ -4,7 +4,6 @@ import java.io.File
 
 fun main() {
     val list = File("data.txt").readLines().map { it[0] to it.drop(1).toInt() }
-
     var current = 50
     var sum = 0
     var sum2 = 0

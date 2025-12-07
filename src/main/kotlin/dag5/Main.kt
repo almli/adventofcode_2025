@@ -24,7 +24,6 @@ fun main() {
             }
             return false
         }
-
         return candidates.count { isFresh(it) }.toLong()
     }
 
