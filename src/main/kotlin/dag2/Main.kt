@@ -9,17 +9,16 @@ fun main() {
 }
 
 private fun solve(list: List<Pair<Long, Long>>, maxParts: Int?): Long {
-    val invalidIds = mutableListOf<Long>()
+    var sum = 0L
     list.forEach {
         var current = it.first
-        val end = it.second
-        while (current <= end) {
+        while (current <= it.second) {
             val str = current.toString()
             val length = str.length
             for (parts in 2..(maxParts ?: length)) {
                 if (length % parts == 0) {
                     if (str.chunked(str.length / parts).distinct().size <= 1) {
-                        invalidIds.add(current)
+                        sum += current
                         break
                     }
                 }
@@ -27,5 +26,5 @@ private fun solve(list: List<Pair<Long, Long>>, maxParts: Int?): Long {
             current++
         }
     }
-    return invalidIds.reduce { a, b -> a + b }
+    return sum
 }
