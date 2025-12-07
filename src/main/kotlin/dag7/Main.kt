@@ -2,7 +2,6 @@ package dag7
 
 import java.io.File
 
-
 fun main() {
     val matrix: Array<CharArray> = File("data.txt").readLines().map { it.toCharArray() }.toTypedArray()
     val width = matrix[0].count()
