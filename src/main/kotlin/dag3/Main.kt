@@ -8,14 +8,14 @@ fun main() {
     println("del2: " + solve(list, 12));
 }
 
-fun solve(list: List<String>, antallCeller: Int): Long =
-    list.map { best(it, antallCeller) }.reduce { acc, i -> acc + i }
+fun solve(list: List<String>, cellCount: Int): Long =
+    list.map { best(it, cellCount) }.reduce { acc, i -> acc + i }
 
-fun best(bank: String, antallCeller: Int): Long {
+fun best(bank: String, cellCount: Int): Long {
     val digits = mutableListOf<Char>()
     var lastPos = -1
-    for (i in 1..antallCeller) {
-        lastPos = maxDigitPosition(bank, lastPos + 1, bank.length - (antallCeller - i) - 1)
+    for (i in 1..cellCount) {
+        lastPos = maxDigitPosition(bank, lastPos + 1, bank.length - (cellCount - i) - 1)
         digits.add(bank[lastPos])
     }
     return digits.joinToString("").toLong();
