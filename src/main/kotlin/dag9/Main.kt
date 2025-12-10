@@ -5,7 +5,6 @@ import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
-
 fun norm(a: Int, b: Int) =
     Range(min(a, b), max(a, b))
 
@@ -25,7 +24,6 @@ fun main() {
         }
     }
     areas.sortByDescending { it.sum }
-
     val horizontalLinesMap = mutableMapOf<Int, Pair<Int, Int>>()
     for (i in 0 until points.size - 1 step 2)
         horizontalLinesMap[points[i].second] = Pair(min(points[i].first, points[i + 1].first), max(points[i].first, points[i + 1].first))
@@ -33,7 +31,6 @@ fun main() {
     fun del1(): Long {
         return areas.first().sum
     }
-
 
     fun del2(): Long {
         fun noneInside(area: Area): Boolean {
