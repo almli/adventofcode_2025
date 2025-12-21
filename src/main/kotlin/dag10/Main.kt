@@ -55,6 +55,33 @@ fun main() {
         return machines.sumOf { solve(-1, -1, 0u, it) }
     }
 
+    /**
+     * Prøvde først å løse del to med samme "brute force" som del 1. Det lar seg ikke gjøre innen rimelig tid.
+     *
+     * Formulerte så problement som et ligningsett med like mange ligninger som ukjente.
+     *
+     * F.eks gitt [.##.] (3) (1,3) (2) (2,3) (0,2) (0,1) {3,5,4,7}
+     * Navngi knappene med som k1, k2, k3.. etc
+     *
+     * Ligningen for hver teller er gitt av summen av alle knappene som øker telleren (hvert trykk på knappen øker telleren med 1)
+     * Dvs i dette tilellet:
+     *  k0   k1   k2   k3   k4    k5
+     * (3) (1,3) (2) (2,3) (0,2) (0,1)
+     *
+     * k4 + k5 = 3
+     * k1 + k4 = 5
+     * k2 + k3 + k4 = 4
+     * k0 + k1 + k3 = 7
+     *
+     *
+     * Det finnes en standard metode for å løse slike ligningssett (Gauss-eliminasjon), men den er ikke brukt i min løsning. Da ville jeg evt tatt inn et bibiliotek.
+     *
+     * Ligningssettet kan løses rekursivt ved å prøve alle relevante verdier. F.eks for den første ligningen er det kun noen få relevante verider:
+     * Velg først en variabel. F.eks k4 denne kan kun ha verdier fra 0 til 3  (ettersom en knapp ikke kan trykkes et negativt antall ganger og ettersom summen av k4 og k5 er 3). For hver valgte verdi av k4,  substituter den i alle ligninger  -  i dette tilfellet fører det til at k5 blir gitt (3-k4) og k1 (5-k4)..
+     * Iterer over alle løsninger og velg løsningen der summen k1...kn er minst (altså løsingen som kreves færrest trykk )
+     *
+     * findSolved var også nødvendig for å får rimelig hastigent. Denne ser på to og to lingener og sjekker om 1 av variablene kan løses. F.eks om k1 + k2 + k3 = 6 og k1 + k2 = 5 så er k3 = 1
+     */
     fun del2(): Long {
         data class Equation(val variables: Set<String>, val result: Long) {
             fun substitute(values: Map<String, Long>): Equation? {
@@ -92,7 +119,7 @@ fun main() {
                 val variables = mutableSetOf<String>()
                 for (i in buttons.indices) {
                     if (buttons[i].contains(t.key)) {
-                        variables.add(('a' + i).toString())
+                        variables.add(('k' + i).toString())
                     }
                 }
                 equations.add(Equation(variables, t.value))
