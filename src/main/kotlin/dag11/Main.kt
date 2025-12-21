@@ -2,7 +2,6 @@ package dag11
 
 import java.io.File
 
-
 fun main() {
     fun del1(): Int {
         val nodes = File("data.txt").readLines().map { it.split(" ") }.map { it[0].dropLast(1) to it.drop(1).toSet() }.toMap()
@@ -65,6 +64,21 @@ fun main() {
         return dp
     }
 
+    /**
+     * Prøvde først å løse denne på samme måte som del1, men det er umulig pga antall mulige veier. Visualiserte grafen ved produsere en graphviz fil -  se utkommentert kode.
+     * Grafen er en rettet graf uten sykluser - alle "piler" går samme vei - ingen løkker. En såkalt DAG.
+     *
+     * Det gjør at man kan finne antall ´veier til node x ved å summere antall veier inn til hver av nodene som går inn til node x.  Enkleste måte å gjøre dette på er å først sortere grafen topologisk.
+     * Om grafen ikke lar seg sortere topologisk, er den ikke DAG  (betyr at den innholder sykluser)
+     *
+     * Topologisk sortering: Legg alle nodene som ikke har noe input først i en liste (rekkefølgen blant disse på samme nivå spiller ingen rolle), så fjern input fra disse nodenen fra alle noder de peker på.
+     * Da får du et nytt sett med noder uten input. Legg disse på listen. Gjenta prosessen til alle nodene ligger på den toplogisk sorterte listen
+     *
+     * Fra en vilkårlig node x i den sortere listen kan må nå telle antall veier fra x til y ved å starte på noden x i listen, iterere til node y mens man summer antall noder inn til hver node ved å
+     * telle antall noder som har noden i sin output - dvs antall veier inn til en node blir summen av antall veier inn til alle nodens forgjengere
+     *
+     * For å finne antall veier som går via fft og dac er det bare å multiplisere antall veier fra srv til fft med antall veier fra fft til dac med antall veier fra dac tol out  (de ligger etterhverandre i grafen - ingen sykluser)
+     */
     fun del2(): Long {
         val topological = sortTopological(File("data.txt").readLines().map { it.split(" ") }.map { it[0].dropLast(1) to it.drop(1).toSet() }.toMap())
         val fromSvr = countFrom("svr", topological)
@@ -108,4 +122,4 @@ fun toDot(lines: List<String>): String {
         appendLine("}")
     }
 }
- */
+*/
