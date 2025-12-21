@@ -29,6 +29,11 @@ fun main() {
         return Shape(cells)
     }
 
+    /**
+     * Brente mye krutt på å forsøke å implementere en objektpakking algoritme (DLX med Algoritm x), men det ble etterhvert åpenbart at det var alt for mange muligheter i det store datasettet
+     *
+     * Prøvde for moro skyld å summere totalt antall ruter i pakkene og sammenligne med antall ruter i brettet..
+     */
     fun del1(): Int {
         val parts = File("data.txt").readText(Charsets.UTF_8).split("\n\n")
         val boards = parts.takeLast(1).first().split("\n").map { parseBoard(it) }.toList()
